@@ -1,5 +1,5 @@
 #include "screen_manager.h"
-#include "screens/title_screen.h"
+#include "title_screen.h"
 #include <stdlib.h>
 
 void ScreenManager_managmentLoop(ScreenSetup setup) {

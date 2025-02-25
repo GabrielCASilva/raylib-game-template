@@ -1,6 +1,6 @@
 # Variáveis
 CC = gcc
-CFLAGS = -Wall -I/usr/include/raylib
+CFLAGS = -Wall -I/usr/include/raylib -Iincludes
 LDFLAGS = -L/usr/lib64
 LIBS = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 
