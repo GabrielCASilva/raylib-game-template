@@ -16,15 +16,15 @@ struct screenSetup {
   void (*main)();
   int (*after)();
   void (*destroy)();
+  void (*draw)();
 };
 
 typedef struct screenSetup ScreenSetup;
 
 void ScreenManager_change(void);
-void ScreenManager_managmentLoop(ScreenSetup setup);
 
-void ScreenManager_managmentDraw(void (*beforeDraw)(), void (*mainDraw)(),
-                                 void (*afterDraw)());
+void ScreenManager_managmentLoop(ScreenSetup setup);
+void ScreenManager_managmentDraw(ScreenSetup setup);
 
 ScreenSetup *ScreenSetup_initialize(ScreenManager currentScreen, const int len);
 

@@ -1,5 +1,5 @@
 #include "screen_manager.h"
-#include "./screens/title_screen.h"
+#include "screens/title_screen.h"
 #include <stdlib.h>
 
 void ScreenManager_managmentLoop(ScreenSetup setup) {
@@ -19,14 +19,12 @@ void ScreenManager_managmentLoop(ScreenSetup setup) {
   }
 }
 
-void ScreenManager_managmentDraw(void (*beforeDraw)(), void (*mainDraw)(),
-                                 void (*afterDraw)()) {
-  (*beforeDraw)();
-  (*mainDraw)();
-  (*afterDraw)();
+void ScreenManager_managmentDraw(ScreenSetup setup) {
+  // --
+  setup.draw();
 }
 
-void ScreenSetup_free(ScreenSetup *setup) {
+void ScreenSetup_destroy(ScreenSetup *setup) {
   // --
   free(setup);
 }
@@ -47,6 +45,7 @@ ScreenSetup *ScreenSetup_initialize(ScreenManager currentScreen,
   stp.before = &TitleScreen_beforeLoop;
   stp.main = &TitleScreen_mainLoop;
   stp.after = &TitleScreen_afterLoop;
+  stp.draw = &TitleScreen_draw;
   setup[SCR_TITLE] = stp;
   // --
 

@@ -18,8 +18,7 @@ void loop(float *dt) {
 
 void draw(void) {
   BeginDrawing();
-  ClearBackground(BLACK);
-  DrawText("TEMPLATE", 200, 200, 20, GREEN);
+  ScreenManager_managmentDraw(setup[currentScreen]);
   EndDrawing();
 }
 

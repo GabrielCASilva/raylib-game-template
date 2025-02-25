@@ -6,5 +6,6 @@ void TitleScreen_mainLoop(void);
 int TitleScreen_afterLoop(void);
 
 void TitleScreen_destroy(void);
+void TitleScreen_draw(void);
 
 #endif

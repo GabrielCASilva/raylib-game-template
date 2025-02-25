@@ -1,4 +1,5 @@
 #include "title_screen.h"
+#include <raylib.h>
 #include <stdio.h>
 
 void TitleScreen_beforeLoop(void) {
@@ -19,4 +20,9 @@ int TitleScreen_afterLoop(void) {
 void TitleScreen_destroy(void) {
   // --
   //
-};
+}
+
+void TitleScreen_draw(void) {
+  ClearBackground(BLACK);
+  DrawText("TEMPLATE", 200, 200, 20, GREEN);
+}
