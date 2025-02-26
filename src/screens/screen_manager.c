@@ -1,9 +1,10 @@
 #include "screen_manager.h"
+#include "game_screen.h"
 #include "title_screen.h"
 #include <stdlib.h>
 
 void ScreenManager_managmentLoop(ScreenSetup setup) {
-  int static beforeLoopRunned = 0;
+  static int beforeLoopRunned = 0;
   if (!beforeLoopRunned) {
     setup.before();
     beforeLoopRunned = 1;
@@ -47,6 +48,16 @@ ScreenSetup *ScreenSetup_initialize(ScreenManager currentScreen,
   stp.after = &TitleScreen_afterLoop;
   stp.draw = &TitleScreen_draw;
   setup[SCR_TITLE] = stp;
+  // --
+
+  // --
+  stp.current = SCR_GAME;
+  stp.next = SCR_GAME;
+  stp.before = &GameScreen_beforeLoop;
+  stp.main = &GameScreen_mainLoop;
+  stp.after = &GameScreen_afterLoop;
+  stp.draw = &GameScreen_draw;
+  setup[SCR_GAME] = stp;
   // --
 
   return setup;

@@ -7,6 +7,6 @@
 #define SCREEN_WIDTH 1080
 #define SCREEN_HEIGHT 720
 
-#define NUM_OF_SCREENS 1
+#define NUM_OF_SCREENS 2
 
 #endif

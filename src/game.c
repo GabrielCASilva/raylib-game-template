@@ -3,8 +3,8 @@
 #include "raylib.h"
 #include "screen_manager.h"
 
-ScreenManager currentScreen = SCR_TITLE;
-ScreenSetup *setup = 0;
+static ScreenManager currentScreen = SCR_GAME;
+static ScreenSetup *setup = 0;
 
 void init(void) {
   //
