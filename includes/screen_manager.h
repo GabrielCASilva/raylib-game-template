@@ -10,11 +10,12 @@ enum screenManager {
 typedef enum screenManager ScreenManager;
 
 struct screenSetup {
-  ScreenManager current;
-  ScreenManager next;
-  void (*before)();
+  ScreenManager *current;
+  ScreenManager currentIndex;
+  void (*before)(ScreenManager *current);
   void (*main)();
-  int (*after)();
+  void (*after)();
+  int (*beforeDestroy)();
   void (*destroy)();
   void (*draw)();
 };
@@ -26,7 +27,8 @@ void ScreenManager_change(void);
 void ScreenManager_managmentLoop(ScreenSetup setup);
 void ScreenManager_managmentDraw(ScreenSetup setup);
 
-ScreenSetup *ScreenSetup_initialize(ScreenManager currentScreen, const int len);
+ScreenSetup *ScreenSetup_initialize(ScreenManager *currentScreen,
+                                    const int len);
 
 // free all static variables in all sceans
 void ScreenManager_destroy(void);

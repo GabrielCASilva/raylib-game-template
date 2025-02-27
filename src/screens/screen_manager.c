@@ -1,22 +1,33 @@
 #include "screen_manager.h"
 #include "game_screen.h"
 #include "title_screen.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 void ScreenManager_managmentLoop(ScreenSetup setup) {
   static int beforeLoopRunned = 0;
+  printf("%d\n", *setup.current);
   if (!beforeLoopRunned) {
-    setup.before();
+    setup.before(setup.current);
     beforeLoopRunned = 1;
   }
 
-  // TODO: mudar de tela
-  setup.main();
+  if (*setup.current == setup.currentIndex)
+    setup.main();
 
-  int change = setup.after();
-  if (change) {
-    // TODO: destroy screen before change it
-    // change screen
+  if (*setup.current == setup.currentIndex)
+    setup.after();
+
+  if (*setup.current != setup.currentIndex) {
+    printf("mudou de tela\n");
+
+    int isDestroyed = setup.beforeDestroy();
+    if (isDestroyed) {
+      setup.destroy();
+    }
+
+    // TODO: pensar melhor em que momento isso vai ser 0 de novo
+    beforeLoopRunned = 0;
   }
 }
 
@@ -35,28 +46,32 @@ void ScreenManager_destroy(void) {
   TitleScreen_destroy();
 };
 
-ScreenSetup *ScreenSetup_initialize(ScreenManager currentScreen,
+ScreenSetup *ScreenSetup_initialize(ScreenManager *currentScreen,
                                     const int len) {
   ScreenSetup stp;
   ScreenSetup *setup = malloc(sizeof(ScreenSetup) * len);
 
   // --
-  stp.current = SCR_TITLE;
-  stp.next = SCR_TITLE;
+  stp.current = currentScreen;
+  stp.currentIndex = SCR_TITLE;
   stp.before = &TitleScreen_beforeLoop;
   stp.main = &TitleScreen_mainLoop;
   stp.after = &TitleScreen_afterLoop;
   stp.draw = &TitleScreen_draw;
+  stp.beforeDestroy = &TitleScreen_beforeDestroy;
+  stp.destroy = &TitleScreen_destroy;
   setup[SCR_TITLE] = stp;
   // --
 
   // --
-  stp.current = SCR_GAME;
-  stp.next = SCR_GAME;
+  stp.current = currentScreen;
+  stp.currentIndex = SCR_GAME;
   stp.before = &GameScreen_beforeLoop;
   stp.main = &GameScreen_mainLoop;
   stp.after = &GameScreen_afterLoop;
   stp.draw = &GameScreen_draw;
+  stp.beforeDestroy = &TitleScreen_beforeDestroy;
+  stp.destroy = &GameScreen_destroy;
   setup[SCR_GAME] = stp;
   // --
 

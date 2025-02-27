@@ -8,7 +8,7 @@ static ScreenSetup *setup = 0;
 
 void init(void) {
   //
-  setup = ScreenSetup_initialize(currentScreen, NUM_OF_SCREENS);
+  setup = ScreenSetup_initialize(&currentScreen, NUM_OF_SCREENS);
 }
 
 void loop(float *dt) {

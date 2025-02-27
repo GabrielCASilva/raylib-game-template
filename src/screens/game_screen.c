@@ -1,17 +1,29 @@
 #include "game_screen.h"
 #include <raylib.h>
+#include <stdio.h>
 
-void GameScreen_beforeLoop(void) {
+static ScreenManager *currentScreen;
+
+void GameScreen_beforeLoop(ScreenManager *current) {
   // -
-  //
+  currentScreen = current;
+  printf("Game Screen before Loop\n");
 }
 
 void GameScreen_mainLoop(void) {
   // -
   //
+  if (IsKeyPressed(KEY_ENTER)) {
+    *currentScreen = SCR_TITLE;
+  }
 }
 
-int GameScreen_afterLoop(void) {
+void GameScreen_afterLoop(void) {
+  // -
+  //
+}
+
+int GameScreen_beforeDestroy() {
   // -
   return 0;
 }
